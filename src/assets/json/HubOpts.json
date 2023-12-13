@@ -1,0 +1,23 @@
+[
+  {
+    "comp": "HubOpts",
+    "id": "HubOpts01"
+
+  },
+  {
+    "comp": "TopMenu",
+    "id": "MainMenu"
+  },
+  {
+    "comp": "GroupMan",
+    "id"  : "GroupMan01"    
+  },
+  {
+    "comp": "CFileList",
+    "id": "FileDirs01"
+  },
+  {
+    "comp": "SubsMan",
+    "id": "SubsMan01"    
+  }
+]

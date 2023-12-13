@@ -1,0 +1,14 @@
+[
+  {
+    "comp": "TopMenu",
+    "id": "TopMenu"
+  },
+  {
+    "comp": "CItems",
+    "id": "CItems01"
+  },
+  {
+    "comp": "CFileList",
+    "id": "CFileList01"    
+  }       
+]
