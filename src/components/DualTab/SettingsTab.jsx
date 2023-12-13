@@ -46,7 +46,7 @@ const SettingsTab = ({ selectedNode, setSelectedNode }) => {
   const buttonMethods = {
     add: () => dispatch(topTabActions.addSubscribesTab({ subId: uuid() })),
     // delete: () => dispatch(topTabActions.setActiveSubTab(setSelectedNode.key)),
-    delete: () => dispatch(subsActions.removeSubscribe({subKey: selectedSub.key, activeHub: activeHub})),
+    delete: () => dispatch(subsActions.removeSubscribe({subKey: selectedSub.key, activeHub: activeHub, subName: selectedSub.name})),
     edit: () => setModalMode("edit"),
   };
 
