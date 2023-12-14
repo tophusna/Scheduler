@@ -60,7 +60,6 @@ const HubsTree: React.FC<Props> = ({ selectNode, treeMode, selectedNode }) => {
 
   if (treeMode === "leftSideTree") {
 
-    console.log('treeData=>', formated)
     const treeData = formated;
     return (
       <Tree

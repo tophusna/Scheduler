@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addEntites, changeHubSettings, changeSubscribe, saveSubscribe, changeSubscribes, createHub, createScript, importSlice, removeHub, removeScript, renameHub, renameScript, setActiveSubTab, removeSubscribe } from './actions';
+import { addEntites, changeHubSettings, changeSubscribe, saveSubscribe, changeSubscribes, createHub, createScript, importSlice, removeHub, removeScript, renameHub, renameScript, renameSubscribe, setActiveSubTab, removeSubscribe } from './actions';
 import { initialState } from './initialState';
 
 export const subsSlice = createSlice({
@@ -18,6 +18,7 @@ export const subsSlice = createSlice({
     removeHub,
     removeScript,
     renameScript,
+    renameSubscribe,
     importSlice,
     removeSubscribe
   },

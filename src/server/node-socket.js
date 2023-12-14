@@ -3,7 +3,6 @@ const WebSocket = require('ws');
 const server = new WebSocket.Server({ port: 8002 });
 
 server.on('connection', (socket) => {
-  console.log('socket server on!!!');
 
   socket.on('message', (message) => {
     try {

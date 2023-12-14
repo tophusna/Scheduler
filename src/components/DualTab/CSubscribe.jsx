@@ -67,7 +67,8 @@ export default function CSubscribe() {
         subKey: activeSubTabId
       })
     );
-        dispatch(topTabActions.changeSubscribesTab({ subId: activeSubTabId, subName }))
+        
+    dispatch(topTabActions.changeSubscribesTab({ subId: activeSubTabId, subName }))
   }
 
   const onNameChang = (e) => {

@@ -11,7 +11,7 @@ const ActionButton = ({ icon, onClick, text, isDisabled }: Props) => {
   return (
     <button onClick={onClick} disabled={isDisabled} className='projectTree__actionButton'>
       <img src={icon} alt={text} />
-      {!isDisabled && <div className="hint">{text}</div>}
+      {/* {!isDisabled && <div className="hint">{text}</div>} */}
     </button>
   )
 }

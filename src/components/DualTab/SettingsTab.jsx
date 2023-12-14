@@ -12,6 +12,8 @@ import { getHubSettings } from "../../redux/subsSlice/selectors/getHubSettings";
 import { getHubByKey } from "../../redux/subsSlice/selectors/getHubByKey";
 import { getActiveTabId } from "../../redux/topTabsSlice/selectors/getActiveTabId";
 import uuid from "react-uuid";
+import TreeEditModal from "../ProjectTree/TreeEditModal";
+import { getScribeByKey } from '../../redux/subsSlice/selectors/getScribeByKey'
 
 const SettingsTab = ({ selectedNode, setSelectedNode }) => {
   const [selectedSub, setSelectedSub] = useState();
@@ -24,6 +26,7 @@ const SettingsTab = ({ selectedNode, setSelectedNode }) => {
   const [localSettings, setLocalSettings] = useState(settings);
   const [localName, setLocalName] = useState(title);
   const activeHub = useSelector(getActiveTabId);
+  const subscribe = useSelector(getScribeByKey(selectedSub?.key || ''));
 
   useEffect(() => {
     setLocalName(title);
@@ -31,24 +34,35 @@ const SettingsTab = ({ selectedNode, setSelectedNode }) => {
   }, [id, title, settings]);
 
   const [modalMode, setModalMode] = useState("");
+  const { connectToWs, disconnectWs, connected } = useWsConnection();
+  
+
   const isHub = selectedSub?.type === "folder";
   const isScript = selectedSub?.type === "script";
-  const { connectToWs, disconnectWs, connected } = useWsConnection();
   const buttonRules = {
     add: isHub || selectedNode,
     delete: isHub || isScript,
     edit: isHub || isScript,
   };
+
+  
+  const buttonMethods = {
+    add: () => dispatch(topTabActions.addSubscribesTab({ subId: uuid() })),
+    // delete: () => dispatch(topTabActions.setActiveSubTab(setSelectedNode.key)),
+    delete: () => {
+      console.log('selectedSub=>', selectedSub)
+      
+      dispatch(subsActions.removeSubscribe({subKey: selectedSub.key, activeHub: activeHub, subName: selectedSub.name}))
+      dispatch(topTabActions.removeSubTab({id: '', subName: subscribe.name}));
+    },
+    edit: () => setModalMode("edit"),
+  };
+
   const selectNode = (node) => {
     setSelectedSub(node);
   };
 
-  const buttonMethods = {
-    add: () => dispatch(topTabActions.addSubscribesTab({ subId: uuid() })),
-    // delete: () => dispatch(topTabActions.setActiveSubTab(setSelectedNode.key)),
-    delete: () => dispatch(subsActions.removeSubscribe({subKey: selectedSub.key, activeHub: activeHub, subName: selectedSub.name})),
-    edit: () => setModalMode("edit"),
-  };
+  
 
   const setFormField = (event) => {
     const { name, value } = event.target;
@@ -219,6 +233,13 @@ const SettingsTab = ({ selectedNode, setSelectedNode }) => {
           {connected ? "Подключено" : "Не подключен"}
         </span>
       </div>
+
+      <TreeEditModal
+        method={modalMode}
+        onClose={closeModal}
+        selectedObjType='subscribe'
+        selectedObjectKey={selectedSub?.key}
+      />
     </div>
   );
 };
