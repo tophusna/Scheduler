@@ -40,6 +40,7 @@ const SettingsTab = ({ selectedNode, setSelectedNode }) => {
   const isHub = selectedSub?.type === "folder";
   const isScript = selectedSub?.type === "script";
   const buttonRules = {
+
     add: isHub || selectedNode,
     delete: isHub || isScript,
     edit: isHub || isScript,
@@ -50,12 +51,12 @@ const SettingsTab = ({ selectedNode, setSelectedNode }) => {
     add: () => dispatch(topTabActions.addSubscribesTab({ subId: uuid() })),
     // delete: () => dispatch(topTabActions.setActiveSubTab(setSelectedNode.key)),
     delete: () => {
-      console.log('selectedSub=>', selectedSub)
       
       dispatch(subsActions.removeSubscribe({subKey: selectedSub.key, activeHub: activeHub, subName: selectedSub.name}))
       dispatch(topTabActions.removeSubTab({id: '', subName: subscribe.name}));
     },
-    edit: () => setModalMode("edit"),
+    // edit: () => setModalMode("edit"),
+    edit: () => dispatch(topTabActions.setActiveSubTab(selectedSub.key)),
   };
 
   const selectNode = (node) => {
@@ -177,7 +178,7 @@ const SettingsTab = ({ selectedNode, setSelectedNode }) => {
                 />
               </td>
             </tr>
-            <tr>
+            {/* <tr>
               <td>Тайминг</td>
               <td>
                 <input
@@ -189,7 +190,7 @@ const SettingsTab = ({ selectedNode, setSelectedNode }) => {
                   disabled={connected}
                 />
               </td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </div>

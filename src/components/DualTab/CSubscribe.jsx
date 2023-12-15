@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { topTabActions } from "../../redux/topTabsSlice";
 import { getActiveTabId } from "../../redux/topTabsSlice/selectors/getActiveTabId";
 import { getActiveSubTabId } from "../../redux/subsSlice/selectors/getActiveSubTabId";
+import { getActiveSubTab } from "../../redux/topTabsSlice/selectors/getActiveSubTab";
 import uuid from 'react-uuid';
 
 // Utility function to debounce any function
@@ -25,9 +26,12 @@ const debounce = (func, delay) => {
 };
 
 export default function CSubscribe() {
-  const [subName, setSubName] = useState('subscribe01')
+  const [subName, setSubName] = useState('New Subscribe')
+  const [interval, setInterval] = useState('')
+  const [method, setMethod] = useState('')
   const dispatch = useDispatch();
   const activeHub = useSelector(getActiveTabId);
+  const activeSubTab = useSelector(getActiveSubTab);
   const activeSubTabId = useSelector(getActiveSubTabId);
   const [activeEntityGuid, setActiveEntityGuid] = useState("");
 
@@ -59,12 +63,15 @@ export default function CSubscribe() {
   }
   
   const onSaveClick = () => {
-    dispatch(
-      subsActions.saveSubscribe({
+    
+    dispatch(subsActions.saveSubscribe({
         activeHub,
         entityGuid: activeEntityGuid,
         subName: subName,
-        subKey: activeSubTabId
+        subKey: activeSubTabId,
+        oldName: activeSubTab.title,
+        method: method,
+        interval: interval
       })
     );
         
@@ -75,6 +82,14 @@ export default function CSubscribe() {
     updateSubName(e.target.value);
   }
 
+  const onIntervalChange = (e) => {
+    setInterval(e.target.value)
+  }
+
+  const onMethodChange = e => {
+    setMethod(e.target.name)
+  }
+
   return (
     <div className="subsaval">
       {/* ... (Rest of the code is the same as in the previous response) */}
@@ -82,7 +97,7 @@ export default function CSubscribe() {
         <div className="subbar">
           <div className="tpart">
             <label>Интервал</label>
-            <input type="number" class="number" />
+            <input type="number" class="number" onChange={onIntervalChange}/>
           </div>
           <div className="tpart">
             <label>ПОДПИСАТЬСЯ ИМЯ</label>
@@ -91,14 +106,14 @@ export default function CSubscribe() {
         </div>
         <part>
           <div className="col2">
-            <input type="radio" name="ch_int" class="rswitch" />
+            <input type="radio" name="Изменения" class="rswitch" onChange={onMethodChange}/>
             <label>Изменения</label>
           </div>
           <div></div>
         </part>
         <part>
           <div className="col2">
-            <input type="radio" name="ch_int" class="rswitch" />
+            <input type="radio" name="История" class="rswitch" onChange={onMethodChange}/>
             <label>История</label>
           </div>
           <div className="col2"></div>
@@ -136,7 +151,7 @@ export default function CSubscribe() {
       </div>
         <div className="panel">
           <button onClick={onCancelClick}>
-          отмена
+            отмена
           </button>
           <button onClick={onSaveClick}>
             Сохранить
@@ -145,3 +160,4 @@ export default function CSubscribe() {
     </div>
   );
 }
+

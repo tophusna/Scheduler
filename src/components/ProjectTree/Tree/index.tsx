@@ -87,7 +87,7 @@ const HubsTree: React.FC<Props> = ({ selectNode, treeMode, selectedNode }) => {
               data-type="star"
               className="projectTreeTitle"
             >
-              {item.name}
+              {item.name} (ИНТЕРВАЛ: {item.interval}, {item.method})
             </span>
           ),
           key: `${item.key}`,

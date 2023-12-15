@@ -10,7 +10,7 @@ export function useData(): DataNode[] {
   const hubs = useSelector((state: any) => state.subsReducer.subs)
 
   const makeSubscribes = (hub: any) => hub.subscribes.map((subscribe: any) => ({
-    title: subscribe.name,
+    title: subscribe.name + '(И: ' + subscribe.interval + ', ' + subscribe.method.slice(0,3) + ')',
     key: subscribe.key,
     icon: <Icon icon='star' />,
     type: 'subscribe',

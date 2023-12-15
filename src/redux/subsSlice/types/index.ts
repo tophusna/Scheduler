@@ -28,6 +28,8 @@ export type ISub = {
   name: string
   childrens: IEntity[]
   key: string 
+  interval: string
+  method: string
 }
 
 export type IHub = {

@@ -6,4 +6,5 @@ export const setActiveSubTab = (state: TopTabsState, action: PayloadAction<strin
   if (activeTabIndex >= 0) {
     state.tabs[activeTabIndex].activeTab = action.payload
   }
+  
 } 

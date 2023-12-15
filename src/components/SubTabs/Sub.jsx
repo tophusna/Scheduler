@@ -12,14 +12,14 @@ const SubTab = ({ id, title, type }) => {
     id !== activeTab && dispatch(topTabActions.setActiveSubTab(id))
   }
   const handleCloseTab = () => {
-    dispatch(topTabActions.removeSubTab(id));
+    dispatch(topTabActions.removeSubTab({id, subName: ''}));
   }
   const className = (id === activeTab) && 'active'
   return (
     <div className={className + ' tab'}>
       <span onClick={handleSetActiveTab}>
         <SubIcon type={type} />
-        {title}
+        {title} 
       </span>
       {TAB_TYPES.settings !== type && <CloseIcon onClose={handleCloseTab} />}
     </div>
