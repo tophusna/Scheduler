@@ -9,9 +9,12 @@ import { useState } from "react";
 import { subsActions } from "../../redux/subsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { topTabActions } from "../../redux/topTabsSlice";
+import { subsSlice } from "../../redux/subsSlice";
 import { getActiveTabId } from "../../redux/topTabsSlice/selectors/getActiveTabId";
 import { getActiveSubTabId } from "../../redux/subsSlice/selectors/getActiveSubTabId";
 import { getActiveSubTab } from "../../redux/topTabsSlice/selectors/getActiveSubTab";
+import { getScribeByKey } from "../../redux/subsSlice/selectors/getScribeByKey"
+import TreeEditModal from "../ProjectTree/TreeEditModal";
 import uuid from 'react-uuid';
 
 // Utility function to debounce any function
@@ -26,14 +29,19 @@ const debounce = (func, delay) => {
 };
 
 export default function CSubscribe() {
-  const [subName, setSubName] = useState('New Subscribe')
-  const [interval, setInterval] = useState('')
-  const [method, setMethod] = useState('')
+  const activeSubTabId = useSelector(getActiveSubTabId)
+  const activeSub = useSelector(getScribeByKey(activeSubTabId))
+  
+  const [interval, setInterval] = useState(activeSub?.interval)
+  const [subName, setSubName] = useState(activeSub?.name)
+  const [method, setMethod] = useState(activeSub?.method)
+  const [modalMode, setModalMode] = useState("");
   const dispatch = useDispatch();
   const activeHub = useSelector(getActiveTabId);
   const activeSubTab = useSelector(getActiveSubTab);
-  const activeSubTabId = useSelector(getActiveSubTabId);
+  
   const [activeEntityGuid, setActiveEntityGuid] = useState("");
+  const activeHubKey = useSelector(getActiveTabId);
 
   const handleSubscribe = (subscribe, subName) => {
     dispatch(
@@ -53,13 +61,14 @@ export default function CSubscribe() {
     );
   };
 
-  // Debounced function
-  const updateSubName = debounce((newValue) => {
-    setSubName(newValue);
-  }, 1000); // Delay in ms
+  const closeModal = () => {
+    setModalMode("");
+  };
 
   const onCancelClick = () => {
-
+    setModalMode("delete")
+    // dispatch(topTabActions.removeSubTab({id: activeSubTabId, subName: ''}));
+    // dispatch(subsActions.removeSubscribe({subKey: activeSubTabId, activeHub: activeHubKey, subName: ''}))
   }
   
   const onSaveClick = () => {
@@ -79,7 +88,7 @@ export default function CSubscribe() {
   }
 
   const onNameChang = (e) => {
-    updateSubName(e.target.value);
+    setSubName(e.target.value);
   }
 
   const onIntervalChange = (e) => {
@@ -87,9 +96,10 @@ export default function CSubscribe() {
   }
 
   const onMethodChange = e => {
-    setMethod(e.target.name)
+    setMethod(e.target.value)
   }
 
+  console.log('activeSub=>', activeSub);
   return (
     <div className="subsaval">
       {/* ... (Rest of the code is the same as in the previous response) */}
@@ -97,31 +107,35 @@ export default function CSubscribe() {
         <div className="subbar">
           <div className="tpart">
             <label>Интервал</label>
-            <input type="number" class="number" onChange={onIntervalChange}/>
+            <input type="number" class="number" onChange={onIntervalChange} value={interval} />
           </div>
           <div className="tpart">
             <label>ПОДПИСАТЬСЯ ИМЯ</label>
-            <input type="text" class="number" onChange={(e) => onNameChang(e)} />
+            <input type="text" class="number" onChange={onNameChang} value={subName} />
           </div>
         </div>
+        <form>
         <part>
           <div className="col2">
-            <input type="radio" name="Изменения" class="rswitch" onChange={onMethodChange}/>
-            <label>Изменения</label>
+            <input type="radio" id='option1' name="radiogroup" class="rswitch" value='Изменения' onChange={onMethodChange} checked={method === 'Изменения' ? true : false} />
+            <label for='option1'>Изменения</label>
           </div>
           <div></div>
         </part>
         <part>
           <div className="col2">
-            <input type="radio" name="История" class="rswitch" onChange={onMethodChange}/>
-            <label>История</label>
+            <input type="radio" id='option2' name="radiogroup" class="rswitch" value='История' onChange={onMethodChange} checked={method === 'История' ? true : false}/>
+            <label for='option2'>История</label>
           </div>
           <div className="col2"></div>
         </part>
+        </form>
+        
         <div className="col-3">
           <SubscribeList
             isSubscribed={false}
             name={"Доступные"}
+            subEntities={activeSub?.childrens}
             activeEntityGuid={activeEntityGuid}
             setActiveEntityGuid={setActiveEntityGuid}
           />
@@ -144,6 +158,7 @@ export default function CSubscribe() {
           <SubscribeList
             isSubscribed={true}
             name={"Мои подписки"}
+            subEntities={activeSub?.childrens.filter(child => child.isSubscribed)}
             // activeEntityGuid={activeEntityGuid}
             setActiveEntityGuid={setActiveEntityGuid}
           />
@@ -157,6 +172,12 @@ export default function CSubscribe() {
             Сохранить
           </button>
         </div>
+        <TreeEditModal
+        method={modalMode}
+        onClose={closeModal}
+        selectedObjType='subscribe'
+        selectedObjectKey={activeSubTabId}
+      />
     </div>
   );
 }

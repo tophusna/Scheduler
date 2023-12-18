@@ -14,6 +14,7 @@ const useWsConnection = () => {
 
   const connectToWs = () => {
     setWsConnection(new WebSocket('ws://localhost:8002'));
+    // setWsConnection(new WebSocket('ws://10.10.20.11/connect'));
   }
 
   const disconnectWs = () => {

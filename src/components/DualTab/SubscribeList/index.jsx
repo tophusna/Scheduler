@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from "react-redux";
 
-function SubscribeList({ isSubscribed, name, activeEntityGuid, setActiveEntityGuid }) {
+function SubscribeList({ isSubscribed, name, activeEntityGuid, setActiveEntityGuid, subEntities }) {
 
   const subs = useSelector((state) => state.subsReducer);
   const parent_id = subs.activeTab.split('-')[0] ?? '';

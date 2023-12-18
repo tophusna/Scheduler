@@ -19,18 +19,24 @@ const SettingsTab = ({ selectedNode, setSelectedNode }) => {
   const [selectedSub, setSelectedSub] = useState();
   const dispatch = useDispatch();
   const { id } = useSelector(getActiveTab);
-  const { title } = useSelector(getHubByKey(id));
+  const { title, key, subscribes } = useSelector(getHubByKey(id));
   const settings = useSelector(getHubSettings(id));
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState("add");
   const [localSettings, setLocalSettings] = useState(settings);
   const [localName, setLocalName] = useState(title);
-  const activeHub = useSelector(getActiveTabId);
+  const activeHubKey = useSelector(getActiveTabId);
   const subscribe = useSelector(getScribeByKey(selectedSub?.key || ''));
 
   useEffect(() => {
     setLocalName(title);
     setLocalSettings(settings);
+    if (!connected) {
+      connectToWs();
+    } else {
+      disconnectWs();
+    }
+    setSelectedNode({key: key, type: 'hub', children: subscribes})
   }, [id, title, settings]);
 
   const [modalMode, setModalMode] = useState("");
@@ -51,15 +57,16 @@ const SettingsTab = ({ selectedNode, setSelectedNode }) => {
     add: () => dispatch(topTabActions.addSubscribesTab({ subId: uuid() })),
     // delete: () => dispatch(topTabActions.setActiveSubTab(setSelectedNode.key)),
     delete: () => {
-      
-      dispatch(subsActions.removeSubscribe({subKey: selectedSub.key, activeHub: activeHub, subName: selectedSub.name}))
-      dispatch(topTabActions.removeSubTab({id: '', subName: subscribe.name}));
+      setModalMode("delete")
+      // dispatch(subsActions.removeSubscribe({subKey: selectedSub.key, activeHub: activeHubKey, subName: selectedSub.name}))
+      // dispatch(topTabActions.removeSubTab({id: '', subName: subscribe.name}));
     },
     // edit: () => setModalMode("edit"),
     edit: () => dispatch(topTabActions.setActiveSubTab(selectedSub.key)),
   };
 
   const selectNode = (node) => {
+
     setSelectedSub(node);
   };
 

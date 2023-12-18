@@ -40,7 +40,7 @@ const DualTab = ({selectedNode, setSelectedNode}) => {
     case TAB_TYPES.settings:
       return <SettingsTab selectedNode={selectedNode} setSelectedNode={setSelectedNode}/>
     default:
-      return <CSubscribe subName/>
+      return <CSubscribe/>
   }
 }
 
