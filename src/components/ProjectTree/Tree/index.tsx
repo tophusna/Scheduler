@@ -47,6 +47,14 @@ const HubsTree: React.FC<Props> = ({ selectNode, treeMode, selectedNode }) => {
   };
   const formated = useData();
 
+  const makeParams = (entity: any) => {
+    return entity.map((param: any) => ({
+      title: param.name,
+      key: param.key,
+      type: "param",
+      icon: <Icon icon={"param"} />,
+    }));
+  };
   
   const makeSubscribes = (hub: any) => {
     return hub.map((entity: any) => ({
@@ -54,6 +62,7 @@ const HubsTree: React.FC<Props> = ({ selectNode, treeMode, selectedNode }) => {
       key: entity.entityGuid,
       icon: <Icon icon={"json"} />,
       type: "json",
+      children: makeParams(entity.children)
     }));
   };
 

@@ -16,6 +16,14 @@ export type IEntity = {
   entityGuid: string
   name: string
   isSubscribed?: boolean
+  children: IParam[]
+}
+
+export type IParam = {
+  entityGuid: string
+  name: string
+  key: string
+  value: string
 }
 
 export type IScript = {

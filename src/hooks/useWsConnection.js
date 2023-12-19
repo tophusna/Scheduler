@@ -54,6 +54,7 @@ const useWsConnection = () => {
         if (message.success) {
           dispatch(subsActions.addEntites({
             entities: message.data.message,
+            params: message.data.entity_params,
             activeHub,
           }));
           // dispatch(topTabActions.addSubscribesTab());

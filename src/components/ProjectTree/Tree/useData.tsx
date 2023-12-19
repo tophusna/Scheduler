@@ -22,6 +22,14 @@ export function useData(): DataNode[] {
     key: child.entityGuid,
     icon: <Icon icon={"json"} />,
     type: "json",
+    children: makeparams(child.children)
+  }))
+
+  const makeparams = (children: any) => children.map((child: any) => ({
+    title: child.name,
+    key: child.key,
+    icon: <Icon icon={"param"} />,
+    type: "param",
   }))
 
   // const makeSubscribes = (hub: any) => {

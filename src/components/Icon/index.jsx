@@ -1,5 +1,5 @@
 import { BellFilled } from '@ant-design/icons';
-import { Folder, Hub, FScript, FEnty, Star } from '../../assets/icons';
+import { Folder, Hub, FScript, FEnty, Star, Params, Document, Opts, Next } from '../../assets/icons';
 
 const Icon = ({ icon }) => {
   switch (icon) {
@@ -11,6 +11,8 @@ const Icon = ({ icon }) => {
       return <img src={FScript} alt={icon} />
     case 'json':
       return <img src={FEnty} alt={icon} class='json'/>
+    case 'param':
+      return <img src={Next} alt={icon} />
     case 'star':
       return <img src={Star} alt={icon} />
     default:

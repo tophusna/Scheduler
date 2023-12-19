@@ -7,47 +7,49 @@ const server = new WebSocket.Server({ port: 8002 });
 
 // Sample data from SQL dump
 const entities = [
-  { entityGuid: '1bd10cfb-0b77-4b6f-aaf8-be5af6542f60', name: 'Тестовая сущность', description: 'Какое-то описание', parentId: 1, parentGuid: null, key: '', createdBy: '1bd10cfb-0b77-4b6f-aaf8-be5af6542f60', createdAt: '2023-03-09 22:16:56', updatedAt: '2023-04-20 07:48:13', deleted: 0 },
+  { entityGuid: '1bd10cfb-0b77-4b6f-aaf8-be5af6542f60', name: 'entity1', description: 'Какое-то описание', parentId: 1, parentGuid: null, key: '', createdBy: '1bd10cfb-0b77-4b6f-aaf8-be5af6542f60', createdAt: '2023-03-09 22:16:56', updatedAt: '2023-04-20 07:48:13', deleted: 0, children: [] },
   // Add other entities here
-  { entityGuid: '2bd10cfb-0b77-4b6f-aaf8-be5af6542f60', name: 'Тестовая сущность 2', description: 'Описание 2', parentId: 1, parentGuid: null, key: '', createdBy: '2bd10cfb-0b77-4b6f-aaf8-be5af6542f60', createdAt: '2023-03-10 12:30:00', updatedAt: '2023-04-21 09:15:30', deleted: 0 },
+  { entityGuid: '2bd10cfb-0b77-4b6f-aaf8-be5af6542f60', name: 'entity2', description: 'Описание 2', parentId: 1, parentGuid: null, key: '', createdBy: '2bd10cfb-0b77-4b6f-aaf8-be5af6542f60', createdAt: '2023-03-10 12:30:00', updatedAt: '2023-04-21 09:15:30', deleted: 0, children: [] },
   // Add more entities
 ];
 
 const entityParams = [
-  { entityId: 1, paramId: 1, key: 'param1', value: 'value1', createdAt: '2023-03-09 22:16:56', updatedAt: '2023-04-20 07:48:13', deleted: 0 },
+  { entityGuid: '1bd10cfb-0b77-4b6f-aaf8-be5af6542f60', paramId: 1, name: 'param1', value: 'value1', createdAt: '2023-03-09 22:16:56', updatedAt: '2023-04-20 07:48:13', deleted: 0 },
   // Add other entity_params here
-  { entityId: 2, paramId: 2, key: 'param2', value: 'value2', createdAt: '2023-03-10 12:30:00', updatedAt: '2023-04-21 09:15:30', deleted: 0 },
+  { entityGuid: '1bd10cfb-0b77-4b6f-aaf8-be5af6542f60', paramId: 2, name: 'param2', value: 'value2', createdAt: '2023-03-10 12:30:00', updatedAt: '2023-04-21 09:15:30', deleted: 0 },
+  { entityGuid: '2bd10cfb-0b77-4b6f-aaf8-be5af6542f60', paramId: 3, name: 'param3', value: 'value3', createdAt: '2023-03-10 12:30:00', updatedAt: '2023-04-21 09:15:30', deleted: 0 },
+  { entityGuid: '2bd10cfb-0b77-4b6f-aaf8-be5af6542f60', paramId: 4, name: 'param4', value: 'value4', createdAt: '2023-03-10 12:30:00', updatedAt: '2023-04-21 09:15:30', deleted: 0 },
   // Add more entity_params
 ];
 
 // Adding more entities for demonstration
-for (let i = 3; i <= 20; i++) {
-  entities.push({
-    entityGuid: `entity-guid-${i}`,
-    name: `Entity ${i}`,
-    description: `Description of Entity ${i}`,
-    parentId: 1,
-    parentGuid: null,
-    key: '',
-    createdBy: `user-${i}`,
-    createdAt: '2023-03-10 12:30:00',
-    updatedAt: '2023-04-21 09:15:30',
-    deleted: 0,
-  });
-}
+// for (let i = 3; i <= 20; i++) {
+//   entities.push({
+//     entityGuid: `entity-guid-${i}`,
+//     name: `Entity ${i}`,
+//     description: `Description of Entity ${i}`,
+//     parentId: 1,
+//     parentGuid: null,
+//     key: '',
+//     createdBy: `user-${i}`,
+//     createdAt: '2023-03-10 12:30:00',
+//     updatedAt: '2023-04-21 09:15:30',
+//     deleted: 0,
+//   });
+// }
 
-// Adding more entity_params for demonstration
-for (let i = 3; i <= 20; i++) {
-  entityParams.push({
-    entityId: i,
-    paramId: i,
-    key: `param${i}`,
-    value: `value${i}`,
-    createdAt: '2023-03-10 12:30:00',
-    updatedAt: '2023-04-21 09:15:30',
-    deleted: 0,
-  });
-}
+// // Adding more entity_params for demonstration
+// for (let i = 3; i <= 20; i++) {
+//   entityParams.push({
+//     entityId: i,
+//     paramId: i,
+//     key: `param${i}`,
+//     value: `value${i}`,
+//     createdAt: '2023-03-10 12:30:00',
+//     updatedAt: '2023-04-21 09:15:30',
+//     deleted: 0,
+//   });
+// }
 
 server.on('connection', (socket) => {
   socket.on('message', (message) => {

@@ -99,7 +99,6 @@ export default function CSubscribe() {
     setMethod(e.target.value)
   }
 
-  console.log('activeSub=>', activeSub);
   return (
     <div className="subsaval">
       {/* ... (Rest of the code is the same as in the previous response) */}
