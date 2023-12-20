@@ -33,8 +33,8 @@ const SubTab = ({ id, title, type }) => {
     id === 'settings' && onConnectClick()
   }
   const handleCloseTab = () => {
-    setModalMode("delete")
-    // dispatch(topTabActions.removeSubTab({id, subName: ''}));
+    // setModalMode("delete")
+    dispatch(topTabActions.removeSubTab({id, subName: ''}));
     // dispatch(subsActions.removeSubscribe({subKey: id, activeHub: activeHubKey, subName: ''}))
   }
   const closeModal = () => {

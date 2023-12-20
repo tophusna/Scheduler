@@ -12,7 +12,7 @@ export const getScribeByKey = (key: string) => (state: RootState): ISub => {
   }
   return {
     childrens: [],
-    name: 'ПОДПИСАТЬСЯ',
+    name: 'новый подписки',
     key: '404',
     interval: '', 
     method: ''

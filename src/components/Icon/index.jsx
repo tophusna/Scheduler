@@ -12,7 +12,7 @@ const Icon = ({ icon }) => {
     case 'json':
       return <img src={FEnty} alt={icon} class='json'/>
     case 'param':
-      return <img src={Next} alt={icon} />
+      return <img src={Params} alt={icon} />
     case 'star':
       return <img src={Star} alt={icon} />
     default:

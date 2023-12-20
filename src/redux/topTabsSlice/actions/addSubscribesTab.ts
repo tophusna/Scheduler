@@ -4,13 +4,14 @@ import { PayloadAction } from "@reduxjs/toolkit";
 
 type AddSubscribesTab = {
   subId: string
+  subName: string
 }
 
 export const addSubscribesTab = (state: TopTabsState, action: PayloadAction<AddSubscribesTab>) => {
   const { activeTab } = state;
   const newTab: TopTabChild = {
     id: action.payload.subId,
-    title: "Подписаться",
+    title: action.payload.subName || "новый подписки",
     type: TAB_TYPES.subscribe,
   };
 

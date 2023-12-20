@@ -54,7 +54,7 @@ const SettingsTab = ({ selectedNode, setSelectedNode }) => {
 
   
   const buttonMethods = {
-    add: () => dispatch(topTabActions.addSubscribesTab({ subId: uuid() })),
+    add: () => dispatch(topTabActions.addSubscribesTab({ subId: uuid(), subName: '' })),
     // delete: () => dispatch(topTabActions.setActiveSubTab(setSelectedNode.key)),
     delete: () => {
       setModalMode("delete")
@@ -62,7 +62,10 @@ const SettingsTab = ({ selectedNode, setSelectedNode }) => {
       // dispatch(topTabActions.removeSubTab({id: '', subName: subscribe.name}));
     },
     // edit: () => setModalMode("edit"),
-    edit: () => dispatch(topTabActions.setActiveSubTab(selectedSub.key)),
+    edit: () => {
+      dispatch(topTabActions.setActiveSubTab(selectedSub.key))
+      dispatch(topTabActions.addSubscribesTab({ subId: uuid(), subName:'sub01' }))
+    }
   };
 
   const selectNode = (node) => {

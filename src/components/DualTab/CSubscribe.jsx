@@ -32,9 +32,9 @@ export default function CSubscribe() {
   const activeSubTabId = useSelector(getActiveSubTabId)
   const activeSub = useSelector(getScribeByKey(activeSubTabId))
   
-  const [interval, setInterval] = useState(activeSub?.interval)
+  const [interval, setInterval] = useState(activeSub?.interval || 0)
   const [subName, setSubName] = useState(activeSub?.name)
-  const [method, setMethod] = useState(activeSub?.method)
+  const [method, setMethod] = useState(activeSub?.method || 'Изменения')
   const [modalMode, setModalMode] = useState("");
   const dispatch = useDispatch();
   const activeHub = useSelector(getActiveTabId);
@@ -110,7 +110,7 @@ export default function CSubscribe() {
           </div>
           <div className="tpart">
             <label>ПОДПИСАТЬСЯ ИМЯ</label>
-            <input type="text" class="number" onChange={onNameChang} value={subName} />
+            <input type="text" class="number" onChange={onNameChang} value={subName} autoFocus />
           </div>
         </div>
         <form>
