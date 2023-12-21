@@ -5,7 +5,7 @@ import {
   BackwardOutlined,
 } from "@ant-design/icons";
 import SubscribeList from "./SubscribeList";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { subsActions } from "../../redux/subsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { topTabActions } from "../../redux/topTabsSlice";
@@ -28,7 +28,7 @@ const debounce = (func, delay) => {
   };
 };
 
-export default function CSubscribe() {
+export default function CSubscribe({active, setActive}) {
   const activeSubTabId = useSelector(getActiveSubTabId)
   const activeSub = useSelector(getScribeByKey(activeSubTabId))
   
@@ -43,7 +43,13 @@ export default function CSubscribe() {
   const [activeEntityGuid, setActiveEntityGuid] = useState("");
   const activeHubKey = useSelector(getActiveTabId);
 
+  useEffect(() => {
+    setActive(true)
+  }, [])
+
+
   const handleSubscribe = (subscribe, subName) => {
+    setActive(false)
     dispatch(
       subsActions.changeSubscribe({
         activeHub,
@@ -51,6 +57,7 @@ export default function CSubscribe() {
         isSubscribed: subscribe,
       })
     );
+    
   };
   const handleSubscribeAll = (subscribe) => {
     dispatch(
@@ -137,6 +144,8 @@ export default function CSubscribe() {
             subEntities={activeSub?.childrens}
             activeEntityGuid={activeEntityGuid}
             setActiveEntityGuid={setActiveEntityGuid}
+            active={active}
+            setActive={setActive}
           />
         </div>
         <div className="col-3">
@@ -160,18 +169,27 @@ export default function CSubscribe() {
             subEntities={activeSub?.childrens.filter(child => child.isSubscribed)}
             // activeEntityGuid={activeEntityGuid}
             setActiveEntityGuid={setActiveEntityGuid}
+            active={active}
+            setActive={setActive}
           />
         </div>
+        
       </div>
-        <div className="panel">
-          <button onClick={onCancelClick}>
-            отмена
-          </button>
-          <button onClick={onSaveClick}>
-            Сохранить
-          </button>
-        </div>
-        <TreeEditModal
+      {active === true && <div className="part">
+        <div className="subbar">
+          <div className="tpart">
+        Нажатие на объект возвращает к первоначальным настройкам.
+      </div></div></div>}
+      
+      <div className="panel">
+        <button onClick={onCancelClick}>
+          отмена
+        </button>
+        <button onClick={onSaveClick}>
+          Сохранить
+        </button>
+      </div>
+      <TreeEditModal
         method={modalMode}
         onClose={closeModal}
         selectedObjType='subscribe'

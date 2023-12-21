@@ -15,7 +15,7 @@ import uuid from "react-uuid";
 import TreeEditModal from "../ProjectTree/TreeEditModal";
 import { getScribeByKey } from '../../redux/subsSlice/selectors/getScribeByKey'
 
-const SettingsTab = ({ selectedNode, setSelectedNode }) => {
+const SettingsTab = ({ selectedNode, setSelectedNode, setActive }) => {
   const [selectedSub, setSelectedSub] = useState();
   const dispatch = useDispatch();
   const { id } = useSelector(getActiveTab);
@@ -31,11 +31,11 @@ const SettingsTab = ({ selectedNode, setSelectedNode }) => {
   useEffect(() => {
     setLocalName(title);
     setLocalSettings(settings);
-    if (!connected) {
-      connectToWs();
-    } else {
-      disconnectWs();
-    }
+    // if (!connected) {
+    //   connectToWs();
+    // } else {
+    //   disconnectWs();
+    // }
     setSelectedNode({key: key, type: 'hub', children: subscribes})
   }, [id, title, settings]);
 
@@ -63,13 +63,13 @@ const SettingsTab = ({ selectedNode, setSelectedNode }) => {
     },
     // edit: () => setModalMode("edit"),
     edit: () => {
+      dispatch(topTabActions.addSubscribesTab({ subId: selectedSub.key, subName: subscribe.name }))
       dispatch(topTabActions.setActiveSubTab(selectedSub.key))
-      dispatch(topTabActions.addSubscribesTab({ subId: uuid(), subName:'sub01' }))
+      
     }
   };
 
   const selectNode = (node) => {
-
     setSelectedSub(node);
   };
 

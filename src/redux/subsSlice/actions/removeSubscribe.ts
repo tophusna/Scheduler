@@ -15,7 +15,6 @@ export const removeSubscribe = (
   const { subKey, activeHub, subName } = action.payload;
   const hubIndex = state.subs.findIndex((hub) => hub.key === activeHub);
 
-  console.log('payload=>', action.payload);
   if (hubIndex > -1) {
     // state.subs[hubIndex].entities = state.subs[hubIndex].entities.filter(
     //   (entity) => entity.entityGuid !== subKey

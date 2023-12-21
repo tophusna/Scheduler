@@ -7,9 +7,9 @@ const server = new WebSocket.Server({ port: 8002 });
 
 // Sample data from SQL dump
 const entities = [
-  { entityGuid: '1bd10cfb-0b77-4b6f-aaf8-be5af6542f60', name: 'entity1', description: 'Какое-то описание', parentId: 1, parentGuid: null, key: '', createdBy: '1bd10cfb-0b77-4b6f-aaf8-be5af6542f60', createdAt: '2023-03-09 22:16:56', updatedAt: '2023-04-20 07:48:13', deleted: 0, children: [] },
+  { entityGuid: '1bd10cfb-0b77-4b6f-aaf8-be5af6542f60', name: 'entity1', children: [], isSubscribed: false },
   // Add other entities here
-  { entityGuid: '2bd10cfb-0b77-4b6f-aaf8-be5af6542f60', name: 'entity2', description: 'Описание 2', parentId: 1, parentGuid: null, key: '', createdBy: '2bd10cfb-0b77-4b6f-aaf8-be5af6542f60', createdAt: '2023-03-10 12:30:00', updatedAt: '2023-04-21 09:15:30', deleted: 0, children: [] },
+  { entityGuid: '2bd10cfb-0b77-4b6f-aaf8-be5af6542f60', name: 'entity2', children: [], isSubscribed: false },
   // Add more entities
 ];
 

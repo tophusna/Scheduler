@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useSelector } from "react-redux"
 import { TAB_TYPES } from "../../redux/topTabsSlice/initialState";
 import SettingsTab from './SettingsTab';
@@ -11,7 +12,8 @@ import CodeEditor from "../CodeEditor";
 
 const DualTab = ({selectedNode, setSelectedNode}) => {
   const subtab = useSelector(getActiveSubTab);
-  const activeTab = useSelector(getActiveTab)
+  const activeTab = useSelector(getActiveTab);
+  const [active, setActive] = useState(true);
 
   if (activeTab.type === TAB_TYPES.codeEditor) {
     return (
@@ -38,9 +40,9 @@ const DualTab = ({selectedNode, setSelectedNode}) => {
         </>
       )
     case TAB_TYPES.settings:
-      return <SettingsTab selectedNode={selectedNode} setSelectedNode={setSelectedNode}/>
+      return <SettingsTab selectedNode={selectedNode} setSelectedNode={setSelectedNode} setActive={setActive} />
     default:
-      return <CSubscribe/>
+      return <CSubscribe active={active} setActive={setActive} />
   }
 }
 

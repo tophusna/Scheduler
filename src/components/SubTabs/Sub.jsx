@@ -30,7 +30,7 @@ const SubTab = ({ id, title, type }) => {
 
   const handleSetActiveTab = () => {
     id !== activeTab && dispatch(topTabActions.setActiveSubTab(id))
-    id === 'settings' && onConnectClick()
+    id !== 'settings' && onConnectClick()
   }
   const handleCloseTab = () => {
     // setModalMode("delete")
