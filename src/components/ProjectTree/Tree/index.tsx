@@ -86,10 +86,9 @@ const HubsTree: React.FC<Props> = ({ selectNode, treeMode, selectedNode }) => {
       />
     );
   } else {
-    if (selectedNode && selectedNode.children.length) {
+    if (selectedNode && selectedNode?.children?.length) {
       const treeData = hubs
-        .filter((item: any) => item.key === selectedNode?.key)[0]
-        .subscribes.map((item: any) => ({
+        .filter((item: any) => item.key === selectedNode?.key)[0]?.subscribes.map((item: any) => ({
           title: (
             <span
               data-key={`${item.key}`}
