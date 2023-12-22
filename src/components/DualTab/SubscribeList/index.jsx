@@ -1,12 +1,21 @@
 import {React, useEffect, useState} from 'react'
 import { useSelector } from "react-redux";
+import { getActiveTab } from "../../../redux/topTabsSlice/selectors/getActiveTab";
+import { getHubByKey } from "../../../redux/subsSlice/selectors/getHubByKey"
 
 function SubscribeList({ isSubscribed, name, activeEntityGuid, setActiveEntityGuid, subEntities, active, setActive }) {
 
   const subs = useSelector((state) => state.subsReducer);
-  const parent_id = subs.activeTab.split('-')[0] ?? '';
 
-  const ents = subs.subs[parent_id].entities;
+  // const parent_id = subs.activeTab.split('-')[0] ?? '';
+
+  const activeTab = useSelector(getActiveTab);
+  const activeHub = useSelector(getHubByKey(activeTab?.id))
+
+  
+  // const ents = subs.subs[parent_id]?.entities;
+
+  const ents = activeHub?.entities;
   const enti = Object.values(ents);
 
   // const [entities, setEntities] = useState([])

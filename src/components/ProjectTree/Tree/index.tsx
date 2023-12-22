@@ -13,20 +13,25 @@ interface Props {
   selectNode: (node: NodeForSelect) => void;
   treeMode: String;
   selectedNode: NodeForSelect;
+  setSelectedNode: React.Dispatch<React.SetStateAction<NodeForSelect>>;
 }
 const HubsTree: React.FC<Props> = ({ selectNode, treeMode, selectedNode }) => {
   const hubs = useSelector((state: any) => state.subsReducer.subs);
   const dispatch = useDispatch();
   const handleNodeSelect = (selected: React.Key[], info: any) => {
+    selectedNode?.key !== selected[0] ? 
     selectNode(
-      selected[0]
-        ? {
+        {
             key: String(selected[0]),
             type: info.node.type,
             children: info.node.children,
-          }
-        : undefined
-    );
+        }
+    ) : selectNode({
+      key: '',
+      type: '',
+      children: [],
+  })
+    // selectNode(undefined)
     // dispatch(topTabActions.setActiveSubTab(String(selected[0])))
   };
 

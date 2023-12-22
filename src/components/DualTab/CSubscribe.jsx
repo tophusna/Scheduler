@@ -10,6 +10,7 @@ import { subsActions } from "../../redux/subsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { topTabActions } from "../../redux/topTabsSlice";
 import { subsSlice } from "../../redux/subsSlice";
+import { getActiveTab } from "../../redux/topTabsSlice/selectors/getActiveTab"
 import { getActiveTabId } from "../../redux/topTabsSlice/selectors/getActiveTabId";
 import { getActiveSubTabId } from "../../redux/subsSlice/selectors/getActiveSubTabId";
 import { getActiveSubTab } from "../../redux/topTabsSlice/selectors/getActiveSubTab";
@@ -29,8 +30,9 @@ const debounce = (func, delay) => {
 };
 
 export default function CSubscribe({active, setActive}) {
-  const activeSubTabId = useSelector(getActiveSubTabId)
-  const activeSub = useSelector(getScribeByKey(activeSubTabId))
+  const activeTab = useSelector(getActiveTab)
+  const activeSubTabId = activeTab?.activeTab
+  const activeSub = useSelector(getScribeByKey(activeTab?.activeTab))
   
   const [interval, setInterval] = useState(activeSub?.interval || 0)
   const [subName, setSubName] = useState(activeSub?.name)

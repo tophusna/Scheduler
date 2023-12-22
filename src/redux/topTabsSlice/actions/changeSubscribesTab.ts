@@ -15,6 +15,7 @@ export const changeSubscribesTab = (
   const { activeTab } = state;
 
   const indexOfActiveTab = state.tabs.findIndex((tab) => tab.id === activeTab);
+
   if (indexOfActiveTab > -1) {
     action.payload.subId !== '' ?
     (state.tabs[indexOfActiveTab].children = state.tabs[indexOfActiveTab].children.map((item: any) =>

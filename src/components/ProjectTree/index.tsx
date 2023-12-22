@@ -17,8 +17,7 @@ const ProjectTree = ({ selectedNode, setSelectedNode }: Props) => {
     setSelectedNode(undefined);
   };
   const selectNode = (node: NodeForSelect) => {
-    if(node?.type === 'hub')
-      setSelectedNode(node);
+    (node?.type === 'hub' && node?.key !== 'undefined') ? setSelectedNode(node) : setSelectedNode(undefined)
   };
 
   const isHub = selectedNode?.type === "hub";
@@ -44,6 +43,7 @@ const ProjectTree = ({ selectedNode, setSelectedNode }: Props) => {
         selectNode={selectNode}
         treeMode="leftSideTree"
         selectedNode={selectedNode}
+        setSelectedNode={setSelectedNode}
       />
       <TreeEditModal
         method={modalMode}

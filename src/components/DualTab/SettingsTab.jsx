@@ -36,7 +36,7 @@ const SettingsTab = ({ selectedNode, setSelectedNode, setActive }) => {
     // } else {
     //   disconnectWs();
     // }
-    setSelectedNode({key: key, type: 'hub', children: subscribes})
+    // setSelectedNode({key: key, type: 'hub', children: subscribes})
   }, [id, title, settings]);
 
   const [modalMode, setModalMode] = useState("");
@@ -54,7 +54,11 @@ const SettingsTab = ({ selectedNode, setSelectedNode, setActive }) => {
 
   
   const buttonMethods = {
-    add: () => dispatch(topTabActions.addSubscribesTab({ subId: uuid(), subName: '' })),
+    add: () => {
+      const sid = uuid()
+      dispatch(topTabActions.addSubscribesTab({ subId: sid, subName: '' }))
+      dispatch(topTabActions.setActiveSubTab(sid))
+    },
     // delete: () => dispatch(topTabActions.setActiveSubTab(setSelectedNode.key)),
     delete: () => {
       setModalMode("delete")
@@ -64,7 +68,7 @@ const SettingsTab = ({ selectedNode, setSelectedNode, setActive }) => {
     // edit: () => setModalMode("edit"),
     edit: () => {
       dispatch(topTabActions.addSubscribesTab({ subId: selectedSub.key, subName: subscribe.name }))
-      dispatch(topTabActions.setActiveSubTab(selectedSub.key))
+      dispatch(topTabActions.setActiveSubTab(selectedSub?.key))
       
     }
   };
