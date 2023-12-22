@@ -41,7 +41,10 @@ const RemoveModal = ({ onClose, selectedObjType, selectedObjectKey }: Props) => 
 
   const handleRemoveItem = () => {
     if (isHub) {
-      hubKey && ( topTabActions.removeTopTab(hubKey));
+      if(hubKey) {
+        dispatch(subsActions.removeHub({ hubKey }))
+        dispatch(topTabActions.removeTopTab(hubKey))
+      }
     } else if(isScript) {
       (hubKey && selectedObjectKey) && dispatch(subsActions.removeScript({ hubKey, scriptKey: selectedObjectKey }))
     } else {
