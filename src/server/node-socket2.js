@@ -10,6 +10,7 @@ const entities = [
   { entityGuid: '1bd10cfb-0b77-4b6f-aaf8-be5af6542f60', name: 'entity1', children: [], isSubscribed: false },
   // Add other entities here
   { entityGuid: '2bd10cfb-0b77-4b6f-aaf8-be5af6542f60', name: 'entity2', children: [], isSubscribed: false },
+  { entityGuid: '3bd10cfb-0b77-4b6f-aaf8-be5af6542f60', name: 'entity3', children: [], isSubscribed: false },
   // Add more entities
 ];
 
@@ -18,7 +19,7 @@ const entityParams = [
   // Add other entity_params here
   { entityGuid: '1bd10cfb-0b77-4b6f-aaf8-be5af6542f60', paramId: 2, name: 'param2', value: 'value2', createdAt: '2023-03-10 12:30:00', updatedAt: '2023-04-21 09:15:30', deleted: 0 },
   { entityGuid: '2bd10cfb-0b77-4b6f-aaf8-be5af6542f60', paramId: 3, name: 'param3', value: 'value3', createdAt: '2023-03-10 12:30:00', updatedAt: '2023-04-21 09:15:30', deleted: 0 },
-  { entityGuid: '2bd10cfb-0b77-4b6f-aaf8-be5af6542f60', paramId: 4, name: 'param4', value: 'value4', createdAt: '2023-03-10 12:30:00', updatedAt: '2023-04-21 09:15:30', deleted: 0 },
+  { entityGuid: '3bd10cfb-0b77-4b6f-aaf8-be5af6542f60', paramId: 4, name: 'param4', value: 'value4', createdAt: '2023-03-10 12:30:00', updatedAt: '2023-04-21 09:15:30', deleted: 0 },
   // Add more entity_params
 ];
 

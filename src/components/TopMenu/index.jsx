@@ -38,6 +38,17 @@ function TopMenu() {
     link.click();
   };
 
+  const onSaveSubsClick = () => {
+    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+      JSON.stringify(store.getState(1))
+    )}`;
+    const link = document.createElement("a");
+    link.href = jsonString;
+    link.download = "Project_name.json";
+
+    link.click();
+  };
+
   const onImportClick = () => {
     setOpen(true)
   };
@@ -73,6 +84,7 @@ function TopMenu() {
               <li onClick={onNewClick}>Новый</li>
               <li onClick={onImportClick}>Импорт</li>
               <li onClick={onExportClick}>Экспорт</li>
+              <li onClick={onSaveSubsClick}><a href="/save_subs">SAVE SUBS</a></li>
               <li>Закрыть</li>
             </ul>
           </li>

@@ -55,6 +55,7 @@ const SettingsTab = ({ selectedNode, setSelectedNode, setActive }) => {
   
   const buttonMethods = {
     add: () => {
+      connectToWs()
       const sid = uuid()
       dispatch(topTabActions.addSubscribesTab({ subId: sid, subName: '' }))
       dispatch(topTabActions.setActiveSubTab(sid))

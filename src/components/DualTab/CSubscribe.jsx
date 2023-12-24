@@ -5,7 +5,7 @@ import {
   BackwardOutlined,
 } from "@ant-design/icons";
 import SubscribeList from "./SubscribeList";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { subsActions } from "../../redux/subsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { topTabActions } from "../../redux/topTabsSlice";
@@ -42,11 +42,13 @@ export default function CSubscribe({active, setActive}) {
   const activeHub = useSelector(getActiveTabId);
   const activeSubTab = useSelector(getActiveSubTab);
   
-  const [activeEntityGuid, setActiveEntityGuid] = useState("");
+  const [activeEntityGuid, setActiveEntityGuid] = useState([]);
   const activeHubKey = useSelector(getActiveTabId);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     setActive(true)
+    inputRef.current.select();
   }, [])
 
 
@@ -55,7 +57,7 @@ export default function CSubscribe({active, setActive}) {
     dispatch(
       subsActions.changeSubscribe({
         activeHub,
-        entityGuid: activeEntityGuid,
+        entityGuid1: activeEntityGuid,
         isSubscribed: subscribe,
       })
     );
@@ -119,7 +121,7 @@ export default function CSubscribe({active, setActive}) {
           </div>
           <div className="tpart">
             <label>ПОДПИСАТЬСЯ ИМЯ</label>
-            <input type="text" class="number" onChange={onNameChang} value={subName} autoFocus />
+            <input type="text" class="number" onChange={onNameChang} value={subName} autoFocus ref={inputRef}/>
           </div>
         </div>
         <form>
@@ -185,7 +187,7 @@ export default function CSubscribe({active, setActive}) {
       
       <div className="panel">
         <button onClick={onCancelClick}>
-          отмена
+          Удалить
         </button>
         <button onClick={onSaveClick}>
           Сохранить

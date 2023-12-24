@@ -12,11 +12,18 @@ function SubscribeList({ isSubscribed, name, activeEntityGuid, setActiveEntityGu
   const activeTab = useSelector(getActiveTab);
   const activeHub = useSelector(getHubByKey(activeTab?.id))
 
-  
   // const ents = subs.subs[parent_id]?.entities;
 
   const ents = activeHub?.entities;
   const enti = Object.values(ents);
+
+  const options = ["Option 1", "Option 2", "Option 3"];
+  const [selectedEntities, setSelectedEntities] = useState([]);
+
+  const handleSelectChange = (event) => {
+    const selected = Array.from(event.target.selectedOptions, option => option.value);
+    setActiveEntityGuid(selected);
+  };
 
   // const [entities, setEntities] = useState([])
   
@@ -52,18 +59,23 @@ function SubscribeList({ isSubscribed, name, activeEntityGuid, setActiveEntityGu
   return (
     <>
       <label>{name}</label>
-      <select multiple id="available" size="4">
-        {entities.map((entity) => (
+      <select multiple id="available" size="4" value={activeEntityGuid} onChange={ handleSelectChange } >
+        {/* {entities.map((entity) => (
 
           <option
             key={entity}
-            onClick={() => { setActive(false); setActiveEntityGuid(entity.entityGuid); }}
+            // onClick={() => { setActive(false); setActiveEntityGuid(entity.entityGuid); }}
             className={entity.entityGuid === activeEntityGuid ? 'selected' : ''}
           >
             {entity.name}
           </option>
+        ))} */}
+        {entities.map((entity, index) => (
+          <option key={entity} value={entity.entityGuid}>{entity.name}</option>
+          // <option key={index} value={entity}>{entity.name}</option>
         ))}
       </select>
+      {/* <p>Selected entities: {entities.join(', ')}</p> */}
     </>
   )
 }
