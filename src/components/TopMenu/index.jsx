@@ -4,6 +4,7 @@ import { Button, Modal } from "antd";
 import Logo from "../Logo";
 import store, { useAppDispatch } from "../../redux/store";
 import {importStateFromJson} from '../../redux/rootActions';
+import axios from "axios";
 
 function TopMenu() {
   const dispatch = useAppDispatch();
@@ -39,14 +40,19 @@ function TopMenu() {
   };
 
   const onSaveSubsClick = () => {
-    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-      JSON.stringify(store.getState(1))
-    )}`;
-    const link = document.createElement("a");
-    link.href = jsonString;
-    link.download = "Project_name.json";
+    axios.post("http://localhost:3001/saveFile", {
+       filepath: 'sadf', fileName: 'sdf', hub: 'sdf' }
+    )
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+    // const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+    //   JSON.stringify(store.getState(1))
+    // )}`;
+    // const link = document.createElement("a");
+    // link.href = jsonString;
+    // link.download = "Project_name.json";
 
-    link.click();
+    // link.click();
   };
 
   const onImportClick = () => {
@@ -84,7 +90,7 @@ function TopMenu() {
               <li onClick={onNewClick}>Новый</li>
               <li onClick={onImportClick}>Импорт</li>
               <li onClick={onExportClick}>Экспорт</li>
-              <li onClick={onSaveSubsClick}><a href="/save_subs">SAVE SUBS</a></li>
+              <li onClick={onSaveSubsClick}><a href="/">SAVE SUBS</a></li>
               <li>Закрыть</li>
             </ul>
           </li>

@@ -14,6 +14,7 @@ const PROJECT_ROUTES: Routes[] = [
   {
     path: "/test",
     component: <ComponentRenderer formFile={menu} />,
+
   }
 ]
 export default PROJECT_ROUTES;

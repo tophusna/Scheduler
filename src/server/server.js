@@ -1,6 +1,8 @@
+
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
+const bodyParser = require('body-parser')
 const app = express();
 const port = 3001;
 const cors = require('cors');
@@ -11,6 +13,8 @@ const corsOptions = {
   origin: 'http://localhost:3000',
 };
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors(corsOptions));
 
 app.get('/script/:filename', (req, res) => {
@@ -88,8 +92,8 @@ app.get('/file/:filename', (req, res) => {
 
 app.post('/saveFile', (req, res) => {
   const { filepath, fileName, hub } = req.body;
-  const folderPath = path.join(__dirname, 'projects', hub, filepath);
-  const filePath = path.join(folderPath, fileName);
+  const folderPath = path.join(__dirname, '..', 'projects');
+  const filePath = path.join(folderPath, 'entity2');
 
   // Проверяем, существует ли папка
   if (!fs.existsSync(folderPath)) {
@@ -97,12 +101,13 @@ app.post('/saveFile', (req, res) => {
     fs.mkdirSync(folderPath, { recursive: true });
   }
 
-  // Сохраняем файл
+  // // Сохраняем файл
   fs.writeFile(filePath, 'Содержимое вашего файла', (err) => {
     if (err) {
       console.error(err);
       res.status(500).send('Ошибка при сохранении файла');
     } else {
+      console.log('success')
       res.status(200).send('Файл успешно сохранен');
     }
   });
