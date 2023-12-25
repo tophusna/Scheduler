@@ -1,10 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Modal } from "antd";
 import Logo from "../Logo";
 import store, { useAppDispatch } from "../../redux/store";
 import {importStateFromJson} from '../../redux/rootActions';
 import axios from "axios";
+import { getHubByKey } from "../../redux/subsSlice/selectors/getHubByKey";
+import { getActiveTabId } from "../../redux/topTabsSlice/selectors/getActiveTabId";
 
 function TopMenu() {
   const dispatch = useAppDispatch();
@@ -15,6 +18,17 @@ function TopMenu() {
     dispatch(importStateFromJson(file))
   };
 
+  const activeHubKey = useSelector(getActiveTabId);
+  const { title, entities } = useSelector(getHubByKey(activeHubKey));
+
+  let jsonFiles = [] 
+  let entityNames = []
+  if(entities?.length > 0) {
+    jsonFiles = entities.filter(e => e.isSubscribed).map(entity => `data:text/json;chatset=utf-8,${encodeURIComponent(
+      JSON.stringify(entity)
+    )}`)
+    entityNames = entities.filter(e => e.isSubscribed).map(entity => entity.name)
+  }
 
   const handleChange = (e) => {
     const fileReader = new FileReader();
@@ -40,19 +54,21 @@ function TopMenu() {
   };
 
   const onSaveSubsClick = () => {
+    
+    
     axios.post("http://localhost:3001/saveFile", {
-       filepath: 'sadf', fileName: 'sdf', hub: 'sdf' }
+       files: jsonFiles, hubName: title, entityNames: entityNames}
     )
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
-    // const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-    //   JSON.stringify(store.getState(1))
-    // )}`;
-    // const link = document.createElement("a");
-    // link.href = jsonString;
-    // link.download = "Project_name.json";
+  //   // const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+  //   //   JSON.stringify(store.getState(1))
+  //   // )}`;
+  //   // const link = document.createElement("a");
+  //   // link.href = jsonString;
+  //   // link.download = "Project_name.json";
 
-    // link.click();
+  //   // link.click();
   };
 
   const onImportClick = () => {

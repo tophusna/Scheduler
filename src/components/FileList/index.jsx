@@ -66,6 +66,7 @@ function FileList() {
   };
 
   const handleFolderClick = (keys, info) => {
+    console.log('info=>', info)
     !info.node.children && loadFilesForFolder(info.node.key, info.node.title);
   };
 

@@ -91,10 +91,11 @@ app.get('/file/:filename', (req, res) => {
 });
 
 app.post('/saveFile', (req, res) => {
-  const { filepath, fileName, hub } = req.body;
-  const folderPath = path.join(__dirname, '..', 'projects');
-  const filePath = path.join(folderPath, 'entity2');
+  const { files, hubName, entityNames } = req.body;
+  const folderPath = path.join(__dirname, '..', 'projects', hubName);
+  const filePaths = entityNames.map(entityName => path.join(folderPath, entityName));
 
+  console.log('req', req.body)
   // Проверяем, существует ли папка
   if (!fs.existsSync(folderPath)) {
     // Если папки не существует, создаем её рекурсивно
@@ -102,15 +103,18 @@ app.post('/saveFile', (req, res) => {
   }
 
   // // Сохраняем файл
-  fs.writeFile(filePath, 'Содержимое вашего файла', (err) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Ошибка при сохранении файла');
-    } else {
-      console.log('success')
-      res.status(200).send('Файл успешно сохранен');
-    }
-  });
+  for (let i = 0; i < files?.length; i++) {
+    fs.writeFile(filePaths[i], files[i], (err) => {
+      if (err) {
+        console.error(err);
+        // res.status(500).send('Ошибка при сохранении файла');
+      } else {
+        console.log('success')
+        // res.status(200).send('Файл успешно сохранен');
+      }
+    });
+  }
+
 });
 
 

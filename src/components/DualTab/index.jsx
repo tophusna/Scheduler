@@ -27,18 +27,18 @@ const DualTab = ({selectedNode, setSelectedNode}) => {
 
 
   switch (subtab.type) {
-    case TAB_TYPES.codeEditor:
-      return (
-        <>
-          <CodeMirror
-            value={subtab.fileContent}
-            height="63vh"
-            theme={okaidia}
-            extensions={[javascript({ jsx: true })]}
-          />
-          {subtab.filePath}
-        </>
-      )
+    // case TAB_TYPES.codeEditor:
+    //   return (
+    //     <>
+    //       <CodeMirror
+    //         value={subtab.fileContent}
+    //         height="63vh"
+    //         theme={okaidia}
+    //         extensions={[javascript({ jsx: true })]}
+    //       />
+    //       {subtab.filePath}
+    //     </>
+    //   )
     case TAB_TYPES.settings:
       return <SettingsTab selectedNode={selectedNode} setSelectedNode={setSelectedNode} setActive={setActive} />
     default:
